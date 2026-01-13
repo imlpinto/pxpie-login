@@ -142,7 +142,7 @@ export function LoginForm({
                   {isLoading ? <Loader2 className="size-4 animate-spin"/> : "Login"}
                   </Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <Link href="/singup">Sign up</Link>
+                  Don&apos;t have an account? <Link href="/signup">Sign up</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
