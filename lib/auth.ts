@@ -18,8 +18,8 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         sendResetPassword: async ({user, url}) => {
-            resend.emails.send({
-                from: "onboading@resend.dev",
+            await resend.emails.send({
+                from: `${process.env.EMAIL_SENDER_NAME} <${process.env.EMAIL_SENDER_ADDRESS}>`,
                 to: user.email,
                 subject: "Reset your password",
                 react: ForgotPasswordEmail({ 

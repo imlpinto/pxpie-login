@@ -1,0 +1,122 @@
+"use client";
+
+import {zodResolver} from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod";
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  Field,
+  FieldDescription,
+  FieldGroup
+} from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { toast } from "sonner";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+
+const formSchema = z.object({
+  email: z.string().email()
+})
+
+export function ForgotPasswordForm({
+   className,
+   ...props
+  }: React.ComponentProps<"div">) {
+    const [isLoading, setIsLoading] = useState(false);
+   
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
+
+async function onSubmit(values: z.infer<typeof formSchema>) {
+  setIsLoading(true);
+
+  try {
+    const result = await authClient.requestPasswordReset({
+      email: values.email,
+      redirectTo: "/reset-password",
+    });
+    
+    if (result.error) {
+      toast.error("Error al enviar el correo de recuperación");
+    } else {
+      toast.success("Correo de recuperación enviado");
+    }
+  } catch (error) {
+    const e = error as Error;
+    toast.error(e.message || "Error al enviar el correo de recuperación");
+  }
+  
+  setIsLoading(false);
+}
+
+  return (
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
+      <Card>
+        <CardHeader className="text-center">
+          <CardTitle className="text-xl">Recupera tu contraseña</CardTitle>
+          <CardDescription>
+            Ingresa tu correo electrónico para reiniciar tu contraseña
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FieldGroup>
+              <FormField 
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Correo electrónico</FormLabel>
+                  <FormControl>
+                    <Input placeholder="pxpie@example.com" {...field}/>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+                )}>
+                </FormField>
+              <Field>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? <Loader2 className="size-4 animate-spin"/> : "Recuperar contraseña"}
+                  </Button>
+                <FieldDescription className="text-center">
+                  Aún no tienes una cuenta? <Link href="/signup">Regístrate</Link>
+                </FieldDescription>
+              </Field>
+            </FieldGroup>
+          </form>
+          </Form>
+        </CardContent>
+      </Card>
+      <FieldDescription className="px-6 text-center">
+      Al crear tu cuenta aceptas nuestros <a href="#">Términos de servicios</a>{" "}
+        y nuestra <a href="#">Política de privacidad</a>.
+      </FieldDescription>
+    </div>
+  );
+}
+
+  
