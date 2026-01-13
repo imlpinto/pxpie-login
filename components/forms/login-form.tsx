@@ -81,9 +81,9 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
+          <CardTitle className="text-xl">Hola de nuevo</CardTitle>
           <CardDescription>
-            Login with your Google account
+            Inicia sesión con tu cuenta de Google
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -98,24 +98,21 @@ export function LoginForm({
                       fill="currentColor"
                     />
                   </svg>
-                  Login with Google
+                  Inicia sesión con Google
                 </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                Or continue with
+                O continua con
               </FieldSeparator>
               <FormField 
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel> Email </FormLabel>
+                  <FormLabel>Correo electrónico</FormLabel>
                   <FormControl>
-                    <Input placeholder="m@example.com" {...field}/>
+                    <Input placeholder="pxpie@example.com" {...field}/>
                   </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}>
@@ -125,7 +122,7 @@ export function LoginForm({
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Contraseña</FormLabel>
                   <FormControl>
                     <Input
                     placeholder="********"
@@ -134,15 +131,18 @@ export function LoginForm({
                     />
                   </FormControl>
                   <FormMessage />
+              <Link className="ml-auto text-sm underline-offset-4 hover:underline" href="/forgot-password">
+                    Forgot your password?
+                </Link>
                 </FormItem>
               )}>
               </FormField>
               <Field>
                 <Button type="submit" disabled={isLoading}>
-                  {isLoading ? <Loader2 className="size-4 animate-spin"/> : "Login"}
+                  {isLoading ? <Loader2 className="size-4 animate-spin"/> : "Inicia Sesión"}
                   </Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <Link href="/signup">Sign up</Link>
+                  Aún no tienes una cuenta? <Link href="/signup">Regístrate</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
@@ -151,8 +151,8 @@ export function LoginForm({
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+      Al crear tu cuenta aceptas nuestros <a href="#">Términos de servicios</a>{" "}
+        y nuestra <a href="#">Política de privacidad</a>.
       </FieldDescription>
     </div>
   )

@@ -83,9 +83,9 @@ export function SignupForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
+          <CardTitle className="text-xl">Crea tu cuenta</CardTitle>
           <CardDescription>
-            Signup with your Google account
+            Regístrate con tu cuenta de Google
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -100,21 +100,24 @@ export function SignupForm({
                       fill="currentColor"
                     />
                   </svg>
-                  Signup with Google
+                  Regístrate con Google
                 </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                Or continue with
+                O continua con
               </FieldSeparator>
               <FormField 
               control={form.control}
               name="username"
               render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Nombre de usuario</FormLabel>
                     <FormControl>
-                        <Input placeholder="shadcn" {...field}/>
+                        <Input placeholder="pxpie" {...field}/>
                     </FormControl>
+                    <FormDescription>
+                    Este será el nombre publico de tu cuenta.
+                  </FormDescription>
                 </FormItem>
               )}
               >
@@ -125,13 +128,10 @@ export function SignupForm({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel> Email </FormLabel>
+                  <FormLabel>Correo electrónico</FormLabel>
                   <FormControl>
-                    <Input placeholder="m@example.com" {...field}/>
+                    <Input placeholder="pxpie@example.com" {...field}/>
                   </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}>
@@ -141,7 +141,7 @@ export function SignupForm({
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Contraseña</FormLabel>
                   <FormControl>
                     <Input
                     placeholder="********"
@@ -155,10 +155,10 @@ export function SignupForm({
               </FormField>
               <Field>
                 <Button type="submit" disabled={isLoading}>
-                  {isLoading ? <Loader2 className="size-4 animate-spin"/> : "Sign Up"}
+                  {isLoading ? <Loader2 className="size-4 animate-spin"/> : "Crea tu cuenta"}
                   </Button>
                 <FieldDescription className="text-center">
-                  Already have an account?{""} <Link href="/login">Log in</Link>
+                  Ya posees una cuenta?{""} <Link href="/login">Inicia Sesión</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
@@ -167,8 +167,8 @@ export function SignupForm({
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        Al crear tu cuenta aceptas nuestros <a href="#">Términos de servicio</a>{" "}
+        y nuestra <a href="#">Política de privacidad</a>.
       </FieldDescription>
     </div>
   )

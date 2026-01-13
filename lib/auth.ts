@@ -3,7 +3,10 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db/drizzle";
 import { user, session, account, verification } from "../db/schema";
 import { nextCookies } from "better-auth/next-js"; // your drizzle instance
-import { router } from "better-auth/api";
+import { Resend } from "resend";
+import ForgotPasswordEmail from "@/components/emails/reset-password";
+
+const resend = new Resend(process.env.RESEND_API_KEY as string);
 
 export const auth = betterAuth({
     socialProviders: {
@@ -14,6 +17,20 @@ export const auth = betterAuth({
     },
     emailAndPassword: {
         enabled: true,
+        sendResetPassword: async ({user, url}) => {
+            resend.emails.send({
+                from: "onboading@resend.dev",
+                to: user.email,
+                subject: "Reset your password",
+                react: ForgotPasswordEmail({ 
+                    username: user.name, 
+                    resetLink: url, 
+                    userEmail: user.email,
+                    token: "", // Token is in interface but not used in component
+                    companyName: process.env.COMPANY_NAME || "Pixelpie Studio"
+                }),
+            })
+        },
     },
     database: drizzleAdapter(db, {
         provider: "pg",
