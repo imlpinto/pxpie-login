@@ -15,14 +15,12 @@ import {
 
 interface ForgotPasswordEmailProps {
     username: string;
-    token: string;
     userEmail: string;
-    resetLink: string;
-    companyName: string;
+    resetUrl: string;
 }
 
 const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
-  const { username, userEmail, resetLink, companyName } = props;
+  const { username, userEmail, resetUrl } = props;
 
   return (
     <Html lang="en" dir="ltr">
@@ -57,7 +55,7 @@ const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
             {/* Reset Button */}
             <Section className="text-center mb-[32px]">
               <Button
-                href={resetLink}
+                href={resetUrl}
                 className="bg-blue-600 text-white px-[32px] py-[16px] rounded-[8px] text-[16px] font-semibold no-underline box-border hover:bg-blue-700"
               >
                 Reset Password
@@ -70,8 +68,8 @@ const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
                 If the button above doesn't work, copy and paste this link into your browser:
               </Text>
               <Text className="text-[14px] text-blue-600 break-all">
-                <Link href={resetLink} className="text-blue-600 underline">
-                  {resetLink}
+                <Link href={resetUrl} className="text-blue-600 underline">
+                  {resetUrl}
                 </Link>
               </Text>
             </Section>
@@ -89,13 +87,13 @@ const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
             {/* Footer */}
             <Section className="border-t border-gray-200 pt-[24px]">
               <Text className="text-[12px] text-gray-500 leading-[16px] m-0 mb-[8px]">
-                This email was sent by {companyName}
+                This email was sent by Pxpiestudio
               </Text>
               <Text className="text-[12px] text-gray-500 leading-[16px] m-0 mb-[8px]">
                 123 Business Street, San Salvador, El Salvador
               </Text>
               <Text className="text-[12px] text-gray-500 leading-[16px] m-0">
-                © {new Date().getFullYear()} {companyName}. All rights reserved. | 
+                © {new Date().getFullYear()} Pxpiestudio. All rights reserved. | 
                 <Link href="#" className="text-gray-500 underline ml-[4px]">
                   Unsubscribe
                 </Link>

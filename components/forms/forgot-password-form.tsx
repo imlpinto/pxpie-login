@@ -34,8 +34,8 @@ import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 
 const formSchema = z.object({
-  email: z.string().email()
-})
+  email: z.string().email(),
+});
 
 export function ForgotPasswordForm({
    className,
@@ -53,24 +53,20 @@ export function ForgotPasswordForm({
 async function onSubmit(values: z.infer<typeof formSchema>) {
   setIsLoading(true);
 
-  try {
-    const result = await authClient.requestPasswordReset({
+    const { error } = await authClient.requestPasswordReset({
       email: values.email,
-      redirectTo: "/reset-password",
+      redirectTo:"/reset-password",
     });
     
-    if (result.error) {
+    if (error) {
       toast.error("Error al enviar el correo de recuperación");
     } else {
       toast.success("Correo de recuperación enviado");
     }
-  } catch (error) {
-    const e = error as Error;
-    toast.error(e.message || "Error al enviar el correo de recuperación");
-  }
   
   setIsLoading(false);
 }
+
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -100,7 +96,11 @@ async function onSubmit(values: z.infer<typeof formSchema>) {
                 </FormField>
               <Field>
                 <Button type="submit" disabled={isLoading}>
-                  {isLoading ? <Loader2 className="size-4 animate-spin"/> : "Recuperar contraseña"}
+                  {isLoading ? ( 
+                    <Loader2 className="size-4 animate-spin" /> 
+                    ) : ( 
+                      "Recuperar contraseña"
+                    )}
                   </Button>
                 <FieldDescription className="text-center">
                   Aún no tienes una cuenta? <Link href="/signup">Regístrate</Link>

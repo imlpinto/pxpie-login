@@ -40,7 +40,7 @@ import Link from "next/link";
 
 const formSchema = z.object({
   username: z.string().min(3),
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(8),
 })
 
@@ -53,6 +53,7 @@ export function SignupForm({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      username: "",
       email:"",
       password:"",
     },
@@ -67,11 +68,16 @@ export function SignupForm({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    const { success, message } = await signUp(values.email, values.password, values.username);
+
+    const { success, message } = await signUp (
+      values.email, 
+      values.password, 
+      values.username
+    );
 
     if (success) {
-      toast.success(message as string);
-      router.push("/dashboard")
+      toast.success(`${message as string} Verifica tu correo electrónico`);
+      router.push("/dashboard");
     } else {
       toast.error(message as string);
     }
