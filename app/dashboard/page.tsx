@@ -10,8 +10,11 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
+import { getOrganizations } from "@/server/organizations";
+import Link from "next/link";
 
 export default async function Dashboard() {
+    const organizations = await getOrganizations();
     return (
         <>
         <header className="absloute top-0 right-0 flex justify-end items-center p-4">
@@ -34,6 +37,17 @@ export default async function Dashboard() {
                     <CreateOrganizationForm />
                 </DialogContent>
             </Dialog>
+
+            <div className="flex flex-col gap-2">
+                <h2 className="text-xl font-bold">Organizations</h2>
+                {organizations.map((organization) => (
+                    <Button variant="outline" key={organization.id} asChild>
+                        <Link href={`/dashboard/organization/${organization.slug}`}>
+                        {organization.name}
+                        </Link>
+                    </Button>
+                ))}
+            </div>
         </div>
         </>
     );

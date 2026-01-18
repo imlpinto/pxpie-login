@@ -16,6 +16,7 @@ import { organization as organizationPlugin } from "better-auth/plugins";
 import ForgotPasswordEmail from "@/components/emails/reset-password";
 import VerifyEmail from "@/components/emails/verify-email";
 import { getActiveOrganization } from "@/server/organizations";
+import { ac, admin, owner, member as members} from "./auth/permissions";
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
@@ -81,5 +82,12 @@ export const auth = betterAuth({
             invitation,
         }
     }),
-    plugins: [organizationPlugin(), nextCookies()],
+    plugins: [organizationPlugin({
+        ac, 
+        roles: {
+            owner,
+            admin,
+            members
+        }
+    }), nextCookies()],
 });
